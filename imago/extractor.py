@@ -1,6 +1,7 @@
-import os,sys
+import os
+import sys
 import exifread
-import helper
+from imago import helper
 import hashlib
 import magic
 from PIL import Image, ImageChops, ImageEnhance
@@ -13,7 +14,7 @@ from geopy.geocoders import Nominatim
 
 
 def basic_info(filename):
-    print ("Extraction of basic information: %s" % (filename,))
+    print(("Extraction of basic information: %s" % (filename,)))
     statinfo = os.stat(filename)
     mime = magic.from_file(filename, mime=True)
     helper.sqlite_insert("MIME",mime,os.path.basename(filename))
@@ -25,10 +26,10 @@ def basic_info(filename):
 
 # Extraction of all exif data
 def exif_info(filename):
-    print ("Extraction of EXIF data from: %s" % (filename,))
+    print(("Extraction of EXIF data from: %s" % (filename,)))
     f = open(filename,'rb')
     tags = exifread.process_file(f)
-    for tag in tags.keys():
+    for tag in list(tags.keys()):
         if tag not in ('JPEGThumbnail', 'TIFFThumbnail', 'Filename', 'EXIF MakerNote'):
             type_tag = tag.split(" ", 1)[0]
             tag_key = tag.split(" ", 1)[1]
@@ -36,7 +37,7 @@ def exif_info(filename):
     return filename
 
 def md5(filename):
-    print ("Calculating md5 of: %s" % (filename,))
+    print(("Calculating md5 of: %s" % (filename,)))
     hash_md5 = hashlib.md5()
     with open(filename, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
@@ -46,7 +47,7 @@ def md5(filename):
     return md5
 
 def sha256(filename):
-    print ("Calculating sha256 of: %s" % (filename,))
+    print(("Calculating sha256 of: %s" % (filename,)))
     hash_sha256 = hashlib.sha256()
     with open(filename, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
@@ -56,7 +57,7 @@ def sha256(filename):
     return sha256
 
 def sha512(filename):
-    print ("Calculating sha512 of: %s" % (filename,))
+    print(("Calculating sha512 of: %s" % (filename,)))
     hash_sha512 = hashlib.sha512()
     with open(filename, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
@@ -69,7 +70,7 @@ def sha512(filename):
 #modified version of a gist by: https://github.com/ewencp
 ##BETA##
 def ela(filename, output_path):
-    print "****ELA is in BETA****"
+    print("****ELA is in BETA****")
     if magic.from_file(filename, mime=True) == "image/jpeg":
         quality_level = 85
         tmp_img = os.path.join(output_path,os.path.basename(filename)+".tmp.jpg")
@@ -85,20 +86,20 @@ def ela(filename, output_path):
         ela_image.save(ela)
         os.remove(tmp_img)
     else:
-        print "ELA works only with JPEG"
+        print("ELA works only with JPEG")
 
 
 #Modified version of a gist by: https://github.com/erans
 def PIL_exif_data_GPS(filename):
     if magic.from_file(filename, mime=True) == "image/jpeg":
-        print ("Extraction of GPS data from: %s" % (filename,))
+        print(("Extraction of GPS data from: %s" % (filename,)))
         image = Image.open(filename)
         exif_data = {}
         exif = image._getexif()
         latitude = None
         longitude = None
         if exif:
-            for tag, value in exif.items():
+            for tag, value in list(exif.items()):
                 decoded = TAGS.get(tag, tag)
                 if decoded == "GPSInfo":
                     gps_data = {}
@@ -137,14 +138,14 @@ def PIL_exif_data_GPS(filename):
                 ls = str(latitude)+","+str(longitude)
                 location = geolocator.reverse(ls)
                 address = location.raw["address"]
-                for a in address.keys():
+                for a in list(address.keys()):
                     helper.sqlite_insert(a,str(address[a]),os.path.basename(filename))
         except:
-    		print "Problem during geopy decode"
+            print("Problem during geopy decode")
 
         return latitude, longitude
     else:
-        print "GPS works only with JPEG"
+        print("GPS works only with JPEG")
     return None
 
 
@@ -153,14 +154,14 @@ def PIL_exif_data_GPS(filename):
 # BETA
 def detect_nudity(filename):
     if magic.from_file(filename, mime=True) == "image/jpeg":
-        print ("Check if the image contains nudity: %s" % (filename,))
+        print(("Check if the image contains nudity: %s" % (filename,)))
         n = Nude(filename)
         n.parse()
         nudity = str(n.result)
         helper.sqlite_insert("Nudity",nudity,os.path.basename(filename))
         return nudity
     else:
-        print "Nudity Detection works only with JPEG"
+        print("Nudity Detection works only with JPEG")
         return None
 
 #based on JohannesBuchner imagehash
@@ -169,46 +170,46 @@ def detect_nudity(filename):
 
 def ahash(filename):
     if "image" in magic.from_file(filename, mime=True):
-        print ("Calculating aHash of: %s" % (filename,))
+        print(("Calculating aHash of: %s" % (filename,)))
         hash = imagehash.average_hash(Image.open(filename))
         helper.sqlite_insert("aHash",str(hash),os.path.basename(filename))
         return hash
     else:
-        print "aHash works only with images"
+        print("aHash works only with images")
         return None
 
 #based on JohannesBuchner imagehash
 #https://github.com/JohannesBuchner/imagehash
 def phash(filename):
     if "image" in magic.from_file(filename, mime=True):
-        print ("Calculating pHash of: %s" % (filename,))
+        print(("Calculating pHash of: %s" % (filename,)))
         hash = imagehash.phash(Image.open(filename))
         helper.sqlite_insert("pHash",str(hash),os.path.basename(filename))
         return hash
     else:
-        print "pHash works only with images"
+        print("pHash works only with images")
         return None
 
 #based on JohannesBuchner imagehash
 #https://github.com/JohannesBuchner/imagehash
 def whash(filename):
     if "image" in magic.from_file(filename, mime=True):
-        print ("Calculating wHash of: %s" % (filename,))
+        print(("Calculating wHash of: %s" % (filename,)))
         hash = imagehash.whash(Image.open(filename))
         helper.sqlite_insert("wHash",str(hash),os.path.basename(filename))
         return hash
     else:
-        print "wHash works only with image images"
+        print("wHash works only with image images")
         return None
 
 #based on JohannesBuchner imagehash
 #https://github.com/JohannesBuchner/imagehash
 def dhash(filename):
     if "image" in magic.from_file(filename, mime=True):
-        print ("Calculating dHash Vertical of: %s" % (filename,))
+        print(("Calculating dHash Vertical of: %s" % (filename,)))
         hash = imagehash.average_hash(Image.open(filename))
         helper.sqlite_insert("dHash",str(hash),os.path.basename(filename))
         return hash
     else:
-        print "dHash vertical works only with image images"
+        print("dHash vertical works only with image images")
         return None

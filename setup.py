@@ -9,22 +9,21 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-NAME = 'imago'
-DESCRIPTION = 'Imago is a Python tool that extract digital evidences from images.'
-URL = 'https://github.com/redaelli/imago-forensics'
-EMAIL = 'solventdev@gmail.com'
-AUTHOR = 'Matteo Redaelli'
-REQUIRES_PYTHON = '>=2.7.0'
-VERSION = '1.0.5'
+NAME = 'imago3'
+DESCRIPTION = 'A fork of the original image-forensics for fun'
+URL = 'https://github.dev/red-ship-it/imago-forensics'
+AUTHOR = 'red-ship-it'
+REQUIRES_PYTHON = '>=3.6'
+VERSION = '1.0.0'
 
 REQUIRED = [
-    'exifread>=2.1.2',
-    'python-magic>=0.4.15',
-    'argparse>=1.4.0',
-    'pillow>=5.2.0',
-    'nudepy>=0.4',
-    'imagehash>=4.0',
-    'geopy>=1.16.0',
+    'exifread',
+    'python-magic',
+    'argparse',
+    'pillow',
+    'nudepy',
+    'imagehash',
+    'geopy',
 ]
 
 EXTRAS = {}
@@ -101,7 +100,7 @@ setup(
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: Implementation :: PyPy'
     ],
     cmdclass={

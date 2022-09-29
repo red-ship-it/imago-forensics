@@ -1,21 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os,sys
+import os
+import sys
 import argparse
-import extractor
-import helper
+from imago import extractor
+from imago import helper
 from os import walk
 
 def main(args=None):
-	print """\
+	print("""\
 ##################################################
 # imago.py                                       #
 # Digital evidences from images!                 #
-# Made with <3 by Matteo Redaelli                #
-# Twitter: @solventred                           #
+# Created by Matteo Redaelli                     #
+# Updated to python3 by red-ship-it				 #
 ##################################################
-	"""
+	""")
 	if args is None:
 		args = sys.argv[1:]
 	parser = argparse.ArgumentParser()
@@ -48,7 +49,7 @@ def main(args=None):
 		helper.initialize_sqli()
 		image_list = list(helper.list_files(base_dir, filetype))
 		for filename in image_list:
-			print ("Processing %s" % (filename,))
+			print(("Processing %s" % (filename,)))
 			# Creation of the SQLite row for the file
 			helper.image_row("evidences", filename)
 			extractor.basic_info(filename)
@@ -85,7 +86,7 @@ def main(args=None):
 				extractor.exif_info(filename)
 			if args.ela:
 				extractor.ela(filename,output_path)
-			print ("Processing of %s completed!" % (filename,))
+			print(("Processing of %s completed!" % (filename,)))
 
 		# Creation of the file CSV
 		helper.create_csv(output_path)

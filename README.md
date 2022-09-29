@@ -1,3 +1,6 @@
+### A quick fork and update to python3 for fun will gladly accept issues and or PRs
+I'm only doing this as I saw it was a neglected project that didnt get any updates. If the original owner wants me to shutdown and merge back in please reach out to me.
+
 [![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
 [![Build Status](https://travis-ci.org/redaelli/imago-forensics.svg?branch=master)](https://travis-ci.org/redaelli/imago-forensics) [![Requirements Status](https://requires.io/github/redaelli/imago-forensics/requirements.svg?branch=master)](https://requires.io/github/redaelli/imago-forensics/requirements/?branch=master)
@@ -118,6 +121,15 @@ Where:
 | ------------- |:-------------:|
 | **Test code** | ❌ |
 | Comments and Suggestions are welcome | 👍 |
+
+# New Fork to do (red-ship-it)
+- review libs being used
+- test out code with all functions
+- Restart export of csv
+- look at testing structure
+- integrate github actions
+- Replace strings for better print mechanisim such as f-strings
+- Look for new libs that may be nice to have
 
 
 ## 📑 Copyright and Licenses

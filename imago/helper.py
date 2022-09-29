@@ -19,7 +19,7 @@ def initialize_sqli(*arg):
 			     (filename text )''')
 		conn.commit()
 	except:
-		print "Problem during table creation"
+		print("Problem during table creation")
 	finally:
 		c.close()
 	return True
@@ -39,15 +39,16 @@ def image_row(table, filename):
 
 # Creation of final csv
 def create_csv(output_path):
-	conn = sqlite3.connect('metadata.db')
-	conn.text_factory = str
-	c = conn.cursor()
-	c.execute("SELECT * FROM evidences")
-	path_to_file = os.path.join(output_path, "imago.csv")
-	with open(path_to_file, "wb") as csv_file:
-		csv_writer = csv.writer(csv_file,delimiter=';')
-		csv_writer.writerow([i[0] for i in c.description])
-		csv_writer.writerows(c)
+	pass
+	# conn = sqlite3.connect('metadata.db')
+	# conn.text_factory = str
+	# c = conn.cursor()
+	# c.execute("SELECT * FROM evidences")
+	# path_to_file = os.path.join(output_path, "imago.csv")
+	# with open(path_to_file, "wb") as csv_file:
+	# 	csv_writer = csv.writer(csv_file,delimiter=';')
+	# 	csv_writer.writerow([i[0] for i in c.description])
+	# 	csv_writer.writerows(c)
 
 #insert into sqliteDB
 def sqlite_insert(table, value, filename):
@@ -81,17 +82,9 @@ def list_files(directory, filetype):
 	return image_list
 
 
-def to_degress(value):
-    d0 = value[0][0]
-    d1 = value[0][1]
-    d = float(d0) / float(d1)
+def to_degress(dms):
+    degrees = dms[0]
+    minutes = dms[1] / 60.0
+    seconds = dms[2] / 3600.0
 
-    m0 = value[1][0]
-    m1 = value[1][1]
-    m = float(m0) / float(m1)
-
-    s0 = value[2][0]
-    s1 = value[2][1]
-    s = float(s0) / float(s1)
-
-    return d + (m / 60.0) + (s / 3600.0)
+    return degrees + minutes + seconds
