@@ -29,7 +29,7 @@ And then it should output the imago's banner
 
 ## Requirements:
 ```
-python 2.7
+python >= 3.6
 exifread >= 2.1.2
 python-magic >= 0.4.15
 argparse >= 1.4.0
@@ -99,7 +99,7 @@ Where:
 | file size (bytes)| ✔️ |
 | MIME type | ✔️ |
 | Exif support  | ✔️ |
-| CSV export  | ✔️ |
+| CSV export  | ~~✔️~~ |
 | Sqlite export  | ✔️ |
 | md5, sha256, sha512  | ✔️ |
 | [Error Level Analysis](https://blackhat.com/presentations/bh-dc-08/Krawetz/Whitepaper/bh-dc-08-krawetz-WP.pdf) | ✔️ BETA |
