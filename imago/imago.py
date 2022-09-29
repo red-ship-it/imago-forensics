@@ -14,7 +14,7 @@ def main(args=None):
 # imago.py                                       #
 # Digital evidences from images!                 #
 # Created by Matteo Redaelli                     #
-# Updated to python3 by red-ship-it				 #
+# Updated to python3 by red-ship-it              #
 ##################################################
 	""")
 	if args is None:
