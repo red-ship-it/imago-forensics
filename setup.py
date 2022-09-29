@@ -88,7 +88,6 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     author=AUTHOR,
-    author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
     packages=find_packages(exclude=('tests',)),
